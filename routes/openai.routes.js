@@ -9,6 +9,8 @@ const { getEngines, postChatRequest } = require("../controllers/openai.controlle
 const keywordFilter = require('../middlewares/keywordFilter');
 // Import the custom middleware to validate requests
 const validateRequest = require("../middlewares/validateRequest");
+// Import the custom middleware to replace name
+const nameReplacer = require("../middlewares/nameReplacer");
 
 // Create a router
 const router = express.Router();
@@ -28,6 +30,8 @@ router.post(
     validateRequest,
     // Apply the keywordFilter middleware to the postChatRequest function
     keywordFilter,
+    // Replace name for psintegra
+    nameReplacer,
     // Call the postChatRequest function
     postChatRequest
 );
