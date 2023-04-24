@@ -46,7 +46,7 @@ const postChatRequest = async (req, res) => {
 
     // Send the chat request to OpenAI
     const openaiResponse = await openai.createChatCompletion(chatRequest);
-    const chatResponse = openaiResponse.data.choices[0].messagex;
+    const chatResponse = openaiResponse.data.choices[0].message;
 
     // Return the chat response to the client
     res.status(200).json({

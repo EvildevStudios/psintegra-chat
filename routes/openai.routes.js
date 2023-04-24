@@ -23,8 +23,8 @@ router.post(
     "/chat",
     // Validate the request body
     [
-        check("role", "Role is required").not().isEmpty(),
         check("messages", "Messages is required").not().isEmpty().isArray(),
+        check("messages.*.role", "Role is required").not().isEmpty(),
         check("messages.*.content", "Content is required").not().isEmpty(),
     ],
     // Validate the request using the custom middleware function
