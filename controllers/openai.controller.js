@@ -32,23 +32,25 @@ const postChatRequest = async (req, res) => {
     for (const message of messages) {
         // Get the content of the message
         const chatContent = message.content;
+        const chatRole = message.role;
 
         // Add the message to the chat messages array
-        chatMessages.push({ role: "user", content: chatContent });
+        chatMessages.push({ role: chatRole, content: chatContent });
     }
 
     // Create the chat request object
     const chatRequest = {
-        model: model ? model : "gpt-3.5-turbo",
+        model: "gpt-3.5-turbo",
         messages: chatMessages,
     };
 
     // Send the chat request to OpenAI
-    const chatResponse = await openai.createChatCompletion(chatRequest);
+    const openaiResponse = await openai.createChatCompletion(chatRequest);
+    const chatResponse = openaiResponse.data.choices[0].messagex;
 
     // Return the chat response to the client
     res.status(200).json({
-        chatResponse: chatResponse.data,
+        chatResponse: chatResponse,
     });
 };
 
