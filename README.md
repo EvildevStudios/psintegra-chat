@@ -1,68 +1,76 @@
-# Psintegra API Documentation
+# Psintegra Psychological Clinic
 
-Psintegra API is a Node.js and Express-based API that provides two endpoints for working with OpenAI's GPT-3 language model. These endpoints are `/api/openai/engines` for retrieving available engines, and `/api/openai/chat` for interacting with the ChatGPT model.
+This git repository contains the code for a web application developed for Psintegra Psychological Clinic. The application has two main components:
 
-# API Endpoints
-## GET `/api/openai/engines`
-Retrieves a list of available engines from OpenAI's API.
+- A React-based client-side application located in the `/Client` folder.
+- An Express-based server-side application located in the `/Server` folder.
 
-Response
-200 OK: Returns an array of objects representing available engines.
-Example response:
+The client and server communicate through RESTful APIs, allowing the client to interact with the server to manage the clinic's data and provide a personalized chat feature for patients.
 
-```json
-Copy code
-[
-  {
-    "id": "davinci",
-    "name": "Davinci"
-  },
-  {
-    "id": "curie",
-    "name": "Curie"
-  },
-  {
-    "id": "babbage",
-    "name": "Babbage"
-  }
-]
-```
-## POST `/api/openai/chat`
-Interacts with OpenAI's ChatGPT model to generate a response to a user's message.
+## Getting Started
 
-Request
-The request body should be a JSON object with the following properties:
+To get started with this project, follow these steps:
 
-engine (string, required): The ID of the engine to use.
-prompt (string, required): The message from the user.
-maxTokens (number, optional): The maximum number of tokens to generate in the response. Defaults to 64.
-temperature (number, optional): The sampling temperature to use during generation. Must be between 0 and 1. Defaults to 0.5.
-Example request:
+1. Clone the repository to your local machine.
+2. Install the required dependencies for the client and server. From the root directory of the project, run the following commands:
 
-```json
-Copy code
-{
-  "messages":[
-    {
-      "role": "user",
-      "content": "¿Como puedo mejorar mi relacion con mi familia?"
-    }
-  ]
-}
-```
-Response
-200 OK: Returns an object representing the generated response.
-Example response:
+   ```
+   cd client
+   npm install
+   
+   cd ../Server
+   npm install
+   ```
 
-```json
-Copy code
-{
-    "chatResponse": {
-        "role": "assistant",
-        "content": "Como modelo de lenguaje natural, no tengo experiencias ni emociones, pero puedo brindar algunos consejos generales que podrían ayudar a mejorar la relación con tu familia:\n\n1. Comunica tus sentimientos: Si hay algo que te está molestando o te sientes triste o frustrado, habla con tu familia al respecto. La comunicación abierta puede ayudar a resolver conflictos y mejorar las relaciones.\n\n2. Pasa tiempo juntos: Dedica tiempo a actividades en familia como ir al cine, hacer una caminata juntos, cocinar o cualquier otra actividad que puedan disfrutar juntos.\n\n3. Practica la empatía: Trata de comprender los sentimientos y perspectivas de los demás miembros de tu familia. Ponerte en su lugar y entender su punto de vista puede ayudarte a comprender mejor sus acciones y a mejorar las relaciones.\n\n4. Escucha activamente: Presta atención y haz preguntas para asegurarte de entender lo que los demás quieren decir. Escuchar activamente puede ayudar a evitar malentendidos y mejorar la comunicación.\n\n5. Admite tus errores: Si cometiste un error o hiciste algo que lastimó a alguien, pide disculpas y trata de hacer las paces. Mostrar humildad y admitir tus errores puede ayudar a fortalecer las relaciones en tu familia.\n\nEspero que estos consejos te puedan ser útiles para mejorar la relación con tu familia."
-    }
-}
-```
+3. Set up the necessary environment variables. Copy the `.env.example` files in both the `client` and `server` directories, rename them to `.env`, and fill in the required values. 
 
-# License
-Psintegra API is licensed under the MIT License. See the LICENSE file for more information.
+   ```
+   cp client/.env.example client/.env
+   cp server/.env.example server/.env
+   ```
+   
+4. Start the development server. From the root directory of the project, run the following command:
+
+   ```
+   npm start
+   ```
+
+   This will start both the client-side and server-side applications in development mode.
+
+## Client
+
+The client-side application is built using React and Redux, and is located in the `/Client` folder. The application allows patients to schedule appointments, view their medical history, and communicate with their assigned therapist through a personalized chat feature.
+
+The main components of the client-side application are:
+
+- `App.jsx`: The main application component that sets up the routes and renders the layout of the application.
+- `firebase.jsx`: A file that sets up the Firebase connection and exports the Firebase context.
+- `pages`: A folder containing the main pages of the application, such as the home page, appointments page, and chat page.
+- `components`: A folder containing the reusable components used throughout the application, such as the navigation bar, appointment form, and chat message list.
+- `context`: A folder containing the React contexts used throughout the application, such as the Firebase context and the user context.
+- `assets`: A folder containing the static assets used throughout the application, such as the logo and the favicon.
+
+## Server
+
+The server-side application is built using Express and MongoDB, and is located in the `/Server` folder. The server provides RESTful APIs to manage the clinic's data, such as patients, appointments, and therapists.
+
+The main components of the server-side application are:
+
+- `app.js`: The main server application file that sets up the routes, middleware, and database connection.
+- `routes`: A folder containing the RESTful API routes for managing the clinic's data, such as `/engines`, and `/chat`.
+- `controllers`: A folder containing the controller functions that handle the logic for each API route, such as `getEngines`, and `postChatRequest`.
+
+## Contributing
+
+If you would like to contribute to this project, please follow these steps:
+
+1. Fork the repository to your own GitHub account.
+2. Clone the repository to your local machine.
+3. Create a new branch for your changes.
+4. Make your changes and commit them.
+5. Push your changes to your forked repository.
+6. Open a pull request from your forked repository to this repository.
+
+## License
+
+This project is licensed under the MIT License - see the `LICENSE` file for details.
