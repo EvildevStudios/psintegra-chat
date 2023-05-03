@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { toast } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [err, setErr] = useState(false);
@@ -14,9 +17,11 @@ const Login = () => {
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
+            toast.success("Logged in successfully");
             navigate("/")
         } catch (err) {
             setErr(true);
+            toast.error("Something went wrong");
         }
     };
     return (
@@ -32,6 +37,7 @@ const Login = () => {
                 </form>
                 <p>You don't have an account? <Link to="/register">Register</Link></p>
             </div>
+            <ToastContainer />  
         </div>
     );
 };

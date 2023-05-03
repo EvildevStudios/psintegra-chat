@@ -5,6 +5,9 @@ import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const [err, setErr] = useState(false);
@@ -45,9 +48,11 @@ const Register = () => {
 
                         //create empty user chats on firestore
                         await setDoc(doc(db, "userChats", res.user.uid), {});
+                        toast.success("Account created successfully");
                         navigate("/");
                     } catch (err) {
                         console.log(err);
+                        toast.error("Something went wrong");
                         setErr(true);
                         setLoading(false);
                     }
@@ -81,6 +86,7 @@ const Register = () => {
                     You do have an account? <Link to="/login">Login</Link>
                 </p>
             </div>
+            <ToastContainer />  
         </div>
     );
 };
