@@ -1,43 +1,37 @@
-# Psintegra Psychological Clinic
+# Psintegra Chat - React Client
 
-This git repository contains the code for a web application developed for Psintegra Psychological Clinic. The application has two main components:
+This git repository contains the code for the React-based client-side application developed for Psintegra Psychological Clinic. The application has three main routes:
 
-- A React-based client-side application located in the `/Client` folder.
-- An Express-based server-side application located in the `/Server` folder.
-
-The client and server communicate through RESTful APIs, allowing the client to interact with the server to manage the clinic's data and provide a personalized chat feature for patients.
+- `/home`: The home page of the application.
+- `/login`: The login page of the application.
+- `/register`: The registration page of the application.
 
 ## Getting Started
 
 To get started with this project, follow these steps:
 
 1. Clone the repository to your local machine.
-2. Install the required dependencies for the client and server. From the root directory of the project, run the following commands:
+2. Install the required dependencies. From the `/client` directory of the project, run the following command:
 
    ```
-   cd client
-   npm install
-   
-   cd ../Server
    npm install
    ```
-
-3. Set up the necessary environment variables. Copy the `.env.example` files in both the `client` and `server` directories, rename them to `.env`, and fill in the required values. 
+   
+3. Set up the necessary environment variables. Copy the `.env.example` file and rename it to `.env`, and fill in the required values. 
 
    ```
-   cp client/.env.example client/.env
-   cp server/.env.example server/.env
+   cp .env.example .env
    ```
    
-4. Start the development server. From the root directory of the project, run the following command:
+4. Start the development server. From the `/client` directory of the project, run the following command:
 
    ```
    npm start
    ```
 
-   This will start both the client-side and server-side applications in development mode.
+   This will start the client-side application in development mode.
 
-## Client
+## File Structure
 
 The client-side application is built using React and Redux, and is located in the `/Client` folder. The application allows patients to schedule appointments, view their medical history, and communicate with their assigned therapist through a personalized chat feature.
 
@@ -50,15 +44,30 @@ The main components of the client-side application are:
 - `context`: A folder containing the React contexts used throughout the application, such as the Firebase context and the user context.
 - `assets`: A folder containing the static assets used throughout the application, such as the logo and the favicon.
 
-## Server
+## Routes
 
-The server-side application is built using Express and MongoDB, and is located in the `/Server` folder. The server provides RESTful APIs to manage the clinic's data, such as patients, appointments, and therapists.
+The client-side application has three main routes:
 
-The main components of the server-side application are:
+### Home
 
-- `app.js`: The main server application file that sets up the routes, middleware, and database connection.
-- `routes`: A folder containing the RESTful API routes for managing the clinic's data, such as `/engines`, and `/chat`.
-- `controllers`: A folder containing the controller functions that handle the logic for each API route, such as `getEngines`, and `postChatRequest`.
+The home page of the application located at `/home`. The main components of the home page are:
+
+- `/src/pages/Home.jsx`: The main component that sets up the layout and renders the content of the home page.
+- `/src/components`: A folder containing the reusable components used throughout the home page, such as the navigation bar, hero banner, and feature list.
+
+### Login
+
+The login page of the application located at `/login`. The main components of the login page are:
+
+- `/src/pages/Login.jsx`: The main component that sets up the layout and renders the content of the login page.
+- `/src/components`: A folder containing the reusable components used throughout the login page, such as the login form and navigation bar.
+
+### Register
+
+The registration page of the application located at `/register`. The main components of the registration page are:
+
+- `/src/pages/Register.jsx`: The main component that sets up the layout and renders the content of the registration page.
+- `/src/components`: A folder containing the reusable components used throughout the registration page, such as the registration form and navigation bar.
 
 ## Contributing
 
@@ -73,4 +82,4 @@ If you would like to contribute to this project, please follow these steps:
 
 ## License
 
-This project is licensed under the MIT License - see the `LICENSE` file for details.
+Psintegra API is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
