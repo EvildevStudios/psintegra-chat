@@ -1,0 +1,11 @@
+version: '3'
+services:
+  backend:
+    image: cabreraevil/psintegra-chat
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+    container_name: psintegra-chat
