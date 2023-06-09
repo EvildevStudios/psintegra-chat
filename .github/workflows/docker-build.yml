@@ -18,7 +18,7 @@ jobs:
 
       - name: Build and tag the Docker image
         run: |
-          docker build . --file Dockerfile --tag ${{secrets.DOCKERHUB_USERNAME}}/psintegra-chat:${{ github.sha }}
+          docker build . --file Dockerfile --tag ${{secrets.DOCKERHUB_USERNAME}}/psintegra-chat:latest
 
       - name: Push the Docker image to Docker Hub
-        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/psintegra-chat:${{ github.sha }}
+        run: docker push ${{secrets.DOCKERHUB_USERNAME}}/psintegra-chat:latest
