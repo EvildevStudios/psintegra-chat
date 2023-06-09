@@ -1,0 +1,20 @@
+{
+    "name": "Psintegra Chat",
+    "short_name": "Psintegra Chat",
+    "description": "Psintegra Web Assistant",
+    "lang": "en-US",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#ffffff",
+    "background_color": "#a7bcff",
+    "scope": "/",
+    "id": "com.psintegra.chat",
+    "icons": [
+        {
+            "src": "psintegra-logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
