@@ -22,7 +22,7 @@ const Chats = () => {
                 const AI = {
                     uid: "ZxCiDcBnT7Y3yZwtJIBowWprRLZ2",
                     displayName: "Psintegra Assistant",
-                    photoURL: "https://firebasestorage.googleapis.com/v0/b/psintegra-db.appspot.com/o/empty.webp?alt=media&token=c23cd900-365b-4d49-a3ea-7e5b131e62b4&_gl=1*1ev2w81*_ga*MTA3MzQxOTIwOS4xNjg2MzUyMTkx*_ga_CW55HF8NVT*MTY4NjM1MjE5MS4xLjEuMTY4NjM1NTYzOC4wLjAuMA..",
+                    photoURL: "https://firebasestorage.googleapis.com/v0/b/psintegra-db.appspot.com/o/psintegra-assistant.png?alt=media&token=eca83bca-d55e-4511-aff5-75f534ca3651&_gl=1*127z5bf*_ga*MTA3MzQxOTIwOS4xNjg2MzUyMTkx*_ga_CW55HF8NVT*MTY4NjM2MzU4Ni4yLjEuMTY4NjM2NTI5Mi4wLjAuMA..",
                 }
                 setChats({ [AI.uid]: { userInfo: AI, date: Date.now() } });
             }
