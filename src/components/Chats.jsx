@@ -17,7 +17,7 @@ const Chats = () => {
             const messages = doc.data()?.messages;
             if (messages)
                 setChats(doc.data());
-            else {
+            else if (!messages && currentUser.uid !== "ZxCiDcBnT7Y3yZwtJIBowWprRLZ2") {
                 // Set default chat with AI
                 const AI = {
                     uid: "ZxCiDcBnT7Y3yZwtJIBowWprRLZ2",
@@ -31,14 +31,19 @@ const Chats = () => {
         return () => unsubscribe();
     }, [currentUser.uid]);
 
-    const handleSelect = async (u) => {
-        dispatch({ type: "CHANGE_USER", payload: u });
+    const handleSelect = async (user) => {
+        if (currentUser.uid === user.uid) {
+            // Do not add AI as a chat participant
+            return;
+        }
+
+        dispatch({ type: "CHANGE_USER", payload: user });
 
         // Check whether the group (chats in Firestore) exists, if not create
         const combinedId =
-            currentUser.uid > u.uid
-                ? currentUser.uid + u.uid
-                : u.uid + currentUser.uid;
+            currentUser.uid > user.uid
+                ? currentUser.uid + user.uid
+                : user.uid + currentUser.uid;
         try {
             const chatRef = doc(db, "chats", combinedId);
             const chatSnapshot = await getDoc(chatRef);
@@ -50,14 +55,14 @@ const Chats = () => {
                 // Create user chats
                 await updateDoc(doc(db, "userChats", currentUser.uid), {
                     [`${combinedId}.userInfo`]: {
-                        uid: u.uid,
-                        displayName: u.displayName,
-                        photoURL: u.photoURL,
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
                     },
                     [`${combinedId}.date`]: serverTimestamp(),
                 });
 
-                await updateDoc(doc(db, "userChats", u.uid), {
+                await updateDoc(doc(db, "userChats", user.uid), {
                     [`${combinedId}.userInfo`]: {
                         uid: currentUser.uid,
                         displayName: currentUser.displayName,
