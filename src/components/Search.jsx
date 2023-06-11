@@ -1,28 +1,19 @@
-import React, { useContext, useState } from "react";
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    setDoc,
-    doc,
-    updateDoc,
-    serverTimestamp,
-    getDoc,
-} from "firebase/firestore";
+import React, { useContext, useState, useEffect } from "react";
+import { collection, query, where, getDocs, setDoc, doc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
+
 const Search = () => {
-    const [username, setUsername] = useState("");
     const [user, setUser] = useState(null);
-    const [err, setErr] = useState(false);
+    const [hasExistingChat, setHasExistingChat] = useState(undefined); // Set initial value to undefined
 
     const { currentUser } = useContext(AuthContext);
 
     const handleSearch = async () => {
         const q = query(
             collection(db, "users"),
-            where("username", "==", username)
+            where("username", "==", "Asistente de Psintegra")
         );
 
         try {
@@ -31,69 +22,90 @@ const Search = () => {
                 setUser(doc.data());
             });
         } catch (err) {
-            setErr(true);
+            toast.error("Error searching user");
         }
     };
 
-    const handleKey = (e) => {
-        e.code === "Enter" && handleSearch();
-    };
-
-    const handleSelect = async () => {
-        //check whether the group(chats in firestore) exists, if not create
+    const hasChatWithUser = async (currentUser, user) => {
         const combinedId =
             currentUser.uid > user.uid
                 ? currentUser.uid + user.uid
                 : user.uid + currentUser.uid;
-        try {
-            const res = await getDoc(doc(db, "chats", combinedId));
 
-            if (!res.exists()) {
-                //create a chat in chats collection
+        try {
+            const docRefCurrentUser = doc(db, "userChats", currentUser.uid);
+            const docSnapCurrentUser = await getDoc(docRefCurrentUser);
+            const userChatData = docSnapCurrentUser.data();
+            const hasExistingChat = userChatData && userChatData[combinedId];
+
+            setHasExistingChat(hasExistingChat);
+        } catch (err) {
+            toast.error("Error checking if chat exists");
+        }
+    };
+
+
+    useEffect(() => {
+        handleSearch();
+    }, []);
+
+    useEffect(() => {
+        if (user && currentUser) {
+            hasChatWithUser(currentUser, user);
+        }
+    }, [user, currentUser]);
+
+    const handleSelect = async () => {
+        if (hasExistingChat === undefined) { // Check if hasExistingChat is undefined
+            const combinedId =
+                currentUser.uid > user.uid
+                    ? currentUser.uid + user.uid
+                    : user.uid + currentUser.uid;
+
+            try {
+                // Create a chat in the chats collection
                 await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
-                //create user chats
+                // Create user chats
                 await updateDoc(doc(db, "userChats", currentUser.uid), {
-                    [combinedId + ".userInfo"]: {
-                        uid: user.uid,
-                        username: user.username,
-                        photoURL: user.photoURL,
+                    [combinedId]: {
+                        userInfo: {
+                            uid: user.uid,
+                            username: user.username,
+                            photoURL: user.photoURL,
+                        },
+                        date: serverTimestamp(),
                     },
-                    [combinedId + ".date"]: serverTimestamp(),
                 });
 
                 await updateDoc(doc(db, "userChats", user.uid), {
-                    [combinedId + ".userInfo"]: {
-                        uid: currentUser.uid,
-                        username: currentUser.username,
-                        photoURL: currentUser.photoURL,
+                    [combinedId]: {
+                        userInfo: {
+                            uid: currentUser.uid,
+                            username: currentUser.username,
+                            photoURL: currentUser.photoURL,
+                        },
+                        date: serverTimestamp(),
                     },
-                    [combinedId + ".date"]: serverTimestamp(),
                 });
+
+            } catch (err) {
+                toast.error("Error creating chat");
             }
-        } catch (err) { }
+        }
 
         setUser(null);
-        setUsername("")
     };
+
     return (
         <div className="search">
-            <div className="searchForm">
-                <input
-                    type="text"
-                    placeholder="Find a user"
-                    onKeyDown={handleKey}
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                />
-            </div>
-            {err && <span>User not found!</span>}
-            {user && (
-                <div className="userChat" onClick={handleSelect}>
+            {user && hasExistingChat === undefined && (
+                <div className="userChat">
                     <img src={user.photoURL} alt="" />
                     <div className="userChatInfo">
                         <span>{user.username}</span>
                     </div>
+                    <button className="add-user" onClick={handleSelect}>Add</button>
                 </div>
             )}
         </div>

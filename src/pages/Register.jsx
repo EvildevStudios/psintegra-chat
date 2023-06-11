@@ -10,7 +10,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
-    const [err, setErr] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -51,7 +50,7 @@ const Register = () => {
             try {
                 // Update profile
                 await updateProfile(res.user, {
-                    username,
+                    displayName: username,
                     photoURL: downloadURL,
                 });
 
@@ -67,12 +66,11 @@ const Register = () => {
                 await setDoc(doc(db, "userChats", res.user.uid), {});
                 navigate("/");
             } catch (err) {
-                console.log(err);
-                setErr(true);
+                toast.error("Error creating user");
                 setLoading(false);
             }
         } catch (err) {
-            setErr(true);
+            toast.error("Error creating user");
             setLoading(false);
         }
     };

@@ -7,7 +7,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-    const [err, setErr] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -20,7 +19,6 @@ const Login = () => {
             toast.success("Logged in successfully");
             navigate("/")
         } catch (err) {
-            setErr(true);
             toast.error("Something went wrong");
         }
     };

@@ -184,7 +184,6 @@
         align-items: center;
         gap: 10px;
         color: white;
-        cursor: pointer;
 
         &:hover {
           background-color: #2f2d52;
@@ -207,6 +206,15 @@
             font-size: 14px;
             color: lightgray;
           }
+        }
+
+        .add-user {
+          background-color: #8da4f1;
+          color: white;
+          margin: 1rem;
+          padding: 0.5rem 1rem;
+          border: none;
+          cursor: pointer;
         }
       }
     }
