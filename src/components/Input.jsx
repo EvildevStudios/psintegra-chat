@@ -6,13 +6,7 @@ import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import { toast } from "react-toastify";
-
-const AI = {
-    uid: "ZxCiDcBnT7Y3yZwtJIBowWprRLZ2",
-    displayName: "Psintegra Assistant",
-    photoURL:
-        "https://firebasestorage.googleapis.com/v0/b/psintegra-db.appspot.com/o/psintegra-assistant.png?alt=media&token=eca83bca-d55e-4511-aff5-75f534ca3651&_gl=1*127z5bf*_ga*MTA3MzQxOTIwOS4xNjg2MzUyMTkx*_ga_CW55HF8NVT*MTY4NjM2MzU4Ni4yLjEuMTY4NjM2NTI5Mi4wLjAuMA..",
-};
+import { AI } from "../common/AI";
 
 const Input = () => {
     const [text, setText] = useState("");
@@ -60,8 +54,6 @@ const Input = () => {
 
             await updateDoc(chatDocRef, { messages: arrayUnion(aiMessage) });
         } catch (error) {
-            console.log("Error:", error);
-
             const errorMessage = error.response?.data?.message || "An error occurred";
 
             const chatDocRef = doc(db, "chats", data.chatId);

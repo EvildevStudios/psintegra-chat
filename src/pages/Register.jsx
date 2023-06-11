@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import Add from "../img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,7 +20,7 @@ const Register = () => {
         const username = e.target[0].value;
         const email = e.target[1].value;
         const password = e.target[2].value;
-        const picture = "https://firebasestorage.googleapis.com/v0/b/psintegra-db.appspot.com/o/empty.webp?alt=media&token=c23cd900-365b-4d49-a3ea-7e5b131e62b4&_gl=1*1ev2w81*_ga*MTA3MzQxOTIwOS4xNjg2MzUyMTkx*_ga_CW55HF8NVT*MTY4NjM1MjE5MS4xLjEuMTY4NjM1NTYzOC4wLjAuMA..";
+        const file = e.target[3].files[0];
 
         // Validate password length
         if (password.length < 6) {
@@ -31,23 +33,45 @@ const Register = () => {
             // Create user
             const res = await createUserWithEmailAndPassword(auth, email, password);
 
-            // Update profile
-            await updateProfile(res.user, { displayName: username, photoURL: picture });
+            // Create a unique image name
+            const date = new Date().getTime();
+            const storageRef = ref(storage, `${username + date}`);
 
-            // Create user on firestore
-            await setDoc(doc(db, "users", res.user.uid), {
-                uid: res.user.uid,
-                username,
-                email,
-                picture
-            });
+            let downloadURL = ""; // Default photo URL
 
-            // Create empty user chats on firestore
-            await setDoc(doc(db, "userChats", res.user.uid), {});
-            toast.success("Account created successfully");
-            navigate("/");
+            if (file) {
+                // If user uploaded a file
+                await uploadBytesResumable(storageRef, file);
+                downloadURL = await getDownloadURL(storageRef);
+            } else {
+                // If user didn't upload a file, use the default photo URL
+                downloadURL = "https://firebasestorage.googleapis.com/v0/b/psintegra-db.appspot.com/o/empty.webp?alt=media&token=c23cd900-365b-4d49-a3ea-7e5b131e62b4";
+            }
+
+            try {
+                // Update profile
+                await updateProfile(res.user, {
+                    username,
+                    photoURL: downloadURL,
+                });
+
+                // Create user on firestore
+                await setDoc(doc(db, "users", res.user.uid), {
+                    uid: res.user.uid,
+                    username,
+                    email,
+                    photoURL: downloadURL,
+                });
+
+                // Create empty user chats on firestore
+                await setDoc(doc(db, "userChats", res.user.uid), {});
+                navigate("/");
+            } catch (err) {
+                console.log(err);
+                setErr(true);
+                setLoading(false);
+            }
         } catch (err) {
-            toast.error("Something went wrong");
             setErr(true);
             setLoading(false);
         }
@@ -62,12 +86,16 @@ const Register = () => {
                     <input required type="text" placeholder="username" />
                     <input required type="email" placeholder="email" />
                     <input required type="password" placeholder="password" />
+                    <input style={{ display: "none" }} type="file" id="file" />
+                    <label htmlFor="file">
+                        <img src={Add} alt="" />
+                        <span>Add an avatar</span>
+                    </label>
                     <button disabled={loading}>Sign up</button>
                     {loading && "Please wait..."}
-                    {err && <span>Something went wrong</span>}
                 </form>
                 <p>
-                    Already have an account? <Link to="/login">Login</Link>
+                    You do have an account? <Link to="/login">Login</Link>
                 </p>
             </div>
             <ToastContainer />
