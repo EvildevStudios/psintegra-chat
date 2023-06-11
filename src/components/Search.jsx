@@ -82,7 +82,7 @@ const Search = () => {
                     [combinedId]: {
                         userInfo: {
                             uid: currentUser.uid,
-                            username: currentUser.username,
+                            username: currentUser.displayName,
                             photoURL: currentUser.photoURL,
                         },
                         date: serverTimestamp(),
