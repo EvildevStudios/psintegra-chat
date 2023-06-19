@@ -6,7 +6,7 @@ import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { AI } from "../common/AI";
+import { BotInfo } from "../data/BotInfo";
 
 const Input = () => {
     const [text, setText] = useState("");
@@ -14,6 +14,8 @@ const Input = () => {
     const { data } = useContext(ChatContext);
 
     const handleSend = async () => {
+        const userChatsDocRef = doc(db, "userChats", currentUser.uid);
+
         if (!text) {
             toast.error("Please type something before sending");
             return;
@@ -25,22 +27,20 @@ const Input = () => {
             senderId: currentUser.uid,
             date: new Date().toISOString(),
         };
+
         setText("");
 
         try {
-            const chatDocRef = doc(db, "chats", data.chatId);
-            const userChatsDocRef = doc(db, "userChats", currentUser.uid);
-
             await Promise.all([
-                updateDoc(chatDocRef, { messages: arrayUnion(message) }),
                 updateDoc(userChatsDocRef, {
-                    [`${data.chatId}.lastMessage.text`]: message.text,
-                    [`${data.chatId}.date`]: serverTimestamp(),
+                    messages: arrayUnion(message),
+                    lastMessage: message,
+                    lastMessageDate: serverTimestamp(),
                 }),
             ]);
 
             const response = await axios.post("/openai/chat", {
-                messages: [{ role: "user", content: text }],
+                messages: [{ role: "user", content: message.text }],
             });
 
             const responseMessage = response.data.chatResponse.content;
@@ -48,23 +48,30 @@ const Input = () => {
             const aiMessage = {
                 id: uuid(),
                 text: responseMessage,
-                senderId: AI.uid,
+                senderId: BotInfo.uid,
                 date: new Date().toISOString(),
             };
 
-            await updateDoc(chatDocRef, { messages: arrayUnion(aiMessage) });
+            await updateDoc(userChatsDocRef, {
+                messages: arrayUnion(aiMessage),
+                lastMessage: aiMessage,
+                lastMessageDate: serverTimestamp(),
+            });
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An error occurred";
 
-            const chatDocRef = doc(db, "chats", data.chatId);
             const errorLog = {
                 id: uuid(),
                 text: errorMessage,
-                senderId: AI.uid,
+                senderId: BotInfo.uid,
                 date: new Date().toISOString(),
             };
 
-            await updateDoc(chatDocRef, { messages: arrayUnion(errorLog) });
+            await updateDoc(userChatsDocRef, {
+                messages: arrayUnion(errorLog),
+                lastMessage: errorLog,
+                lastMessageDate: serverTimestamp(),
+            });
         }
     };
 
@@ -75,12 +82,18 @@ const Input = () => {
                 placeholder="Type something..."
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        handleSend();
+                    }
+                }}
             />
             <div className="send">
                 <button onClick={handleSend}>Send</button>
             </div>
         </div>
     );
+
 };
 
 export default Input;

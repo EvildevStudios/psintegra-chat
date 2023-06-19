@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
+import { BotInfo } from "../data/BotInfo";
 
 const Message = ({ message }) => {
     const { currentUser } = useContext(AuthContext);
-    const { data } = useContext(ChatContext);
     const [timeElapsed, setTimeElapsed] = useState("");
 
     const ref = useRef();
@@ -18,7 +17,7 @@ const Message = ({ message }) => {
         const elapsed = Math.floor((currentTime - messageTime) / 1000); // in seconds
 
         if (elapsed < 60) {
-            setTimeElapsed(`${elapsed} seconds ago`);
+            setTimeElapsed(`Just now`);
         } else if (elapsed < 3600) {
             const minutes = Math.floor(elapsed / 60);
             setTimeElapsed(`${minutes} minutes ago`);
@@ -41,7 +40,7 @@ const Message = ({ message }) => {
                     src={
                         message.senderId === currentUser.uid
                             ? currentUser.photoURL
-                            : data.user.photoURL
+                            : BotInfo.photoURL
                     }
                     alt=""
                 />
