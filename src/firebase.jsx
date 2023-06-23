@@ -4,13 +4,13 @@ import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDsXFthXNiOQ2GYFYTjiVezFYDJZQ9XtPU",
-    authDomain: "psintegra-db.firebaseapp.com",
-    projectId: "psintegra-db",
-    storageBucket: "psintegra-db.appspot.com",
-    messagingSenderId: "1060010124788",
-    appId: "1:1060010124788:web:d1ba474f4cf9daa30fc5a1",
-    measurementId: "G-12RVLPY4B3"
+	apiKey: "AIzaSyBfSIgC3Iq8EfZw6QkooxmP760MfW4-jXU",
+	authDomain: "psintegra-firebase.firebaseapp.com",
+	projectId: "psintegra-firebase",
+	storageBucket: "psintegra-firebase.appspot.com",
+	messagingSenderId: "931770628391",
+	appId: "1:931770628391:web:e38bbb5a0430ee7d559102",
+	measurementId: "G-TX60ZZM86K"
 };
 
 // Initialize Firebase
