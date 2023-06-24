@@ -20,13 +20,13 @@ const Message = ({ message }) => {
             setTimeElapsed(`Justo ahora`);
         } else if (elapsed < 3600) {
             const minutes = Math.floor(elapsed / 60);
-            setTimeElapsed(`${minutes} minutos atrás`);
+            setTimeElapsed(`Hace ${minutes} minutos`);
         } else if (elapsed < 86400) {
             const hours = Math.floor(elapsed / 3600);
-            setTimeElapsed(`${hours} horas atrás`);
+            setTimeElapsed(`Hace ${hours} horas`);
         } else {
             const days = Math.floor(elapsed / 86400);
-            setTimeElapsed(`${days} días atrás`);
+            setTimeElapsed(`Hace ${days} días`);
         }
     }, [message]);
 

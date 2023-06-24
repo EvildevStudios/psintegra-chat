@@ -9,7 +9,7 @@ const Navbar = () => {
 
     return (
         <div className="navbar">
-            <span className="logo">Psintegra Chat</span>
+            <span className="logo">Libre Consejo</span>
             <div className="user">
                 <img src="/src/img/empty.webp" alt="" />
                 <span>{currentUser.displayName}</span>

@@ -33,10 +33,9 @@
     align-items: center;
 
     .logo {
-      width: 200px; // Set the desired width for the image
-      height: auto; // Maintain the aspect ratio of the image by setting height to auto
+      width: 200px;
+      height: auto;
     }
-
 
     .title {
       color: #5d5b8d;
@@ -67,6 +66,7 @@
         font-weight: bold;
         border: none;
         cursor: pointer;
+        border-radius: 5px;
       }
 
       label {
@@ -127,6 +127,7 @@
         .logo {
           font-weight: bold;
           margin-right: 10px;
+          padding-left: 0.5rem;
 
           @include tablet {
             display: none;
