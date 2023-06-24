@@ -4,18 +4,22 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import Message from "./Message";
 import { ChatContext } from "../context/ChatContext";
+import { BotInfo } from "../data/BotInfo";
 
 const Messages = () => {
     const [messages, setMessages] = useState([]);
     const { currentUser } = useContext(AuthContext);
-    const { isLoading, setIsLoading } = useContext(ChatContext);
+    const { isLoading } = useContext(ChatContext);
 
     useEffect(() => {
         if (!currentUser.uid) return;
 
-        const unsubscribe = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
-            doc.exists() && setMessages(doc.data().messages || []);
-        });
+        const unsubscribe = onSnapshot(
+            doc(db, "userChats", currentUser.uid),
+            (doc) => {
+                doc.exists() && setMessages(doc.data().messages || []);
+            }
+        );
 
         return () => {
             unsubscribe();
@@ -24,17 +28,16 @@ const Messages = () => {
 
     return (
         <div className="messages">
-            {isLoading ? (
-                <div className="loading-dots">
-                    <span className="dot"></span>
-                    <span className="dot"></span>
-                    <span className="dot"></span>
-                </div>
-            ) : (
-                messages.map((message) => (
-                    <Message message={message} key={message.id} />
-                ))
-            )}
+            {messages.map((message) => (
+                <Message message={message} key={message.id} />
+            ))}
+            {isLoading && <Message
+                message={{
+                    text: BotInfo.writing,
+                    senderId: BotInfo.uid,
+                    date: new Date().getTime()
+                }}
+            />}
         </div>
     );
 };

@@ -6,10 +6,11 @@ import { v4 as uuid } from "uuid";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BotInfo } from "../data/BotInfo";
+import { ChatContext } from "../context/ChatContext";
 
 const Input = () => {
     const [text, setText] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const {isLoading, setIsLoading} = useContext(ChatContext);
     const { currentUser } = useContext(AuthContext);
 
     const handleSend = async () => {

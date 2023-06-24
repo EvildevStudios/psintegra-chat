@@ -281,10 +281,30 @@
         height: 50px;
         background-color: #5d5b8d;
         display: flex;
+        justify-content: center;
         align-items: center;
-        justify-content: space-between;
-        padding: 10px;
+        padding: 10px 20px;
         color: lightgray;
+      }
+
+      .chatName {
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .statusIndicator {
+        width: 10px;
+        height: 10px;
+        margin-left: 1rem;
+        border-radius: 50%;
+      }
+
+      .online {
+        background-color: rgb(0, 255, 0);
+      }
+
+      .offline {
+        background-color: rgb(255, 0, 0);
       }
 
       .chatIcons {
