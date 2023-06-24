@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
 import { arrayUnion, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
@@ -11,7 +10,6 @@ import { BotInfo } from "../data/BotInfo";
 const Input = () => {
     const [text, setText] = useState("");
     const { currentUser } = useContext(AuthContext);
-    const { data } = useContext(ChatContext);
 
     const handleSend = async () => {
         const userChatsDocRef = doc(db, "userChats", currentUser.uid);
