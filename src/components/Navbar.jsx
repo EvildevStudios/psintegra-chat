@@ -13,7 +13,7 @@ const Navbar = () => {
             <div className="user">
                 <img src="/src/img/empty.webp" alt="" />
                 <span>{currentUser.displayName}</span>
-                <button onClick={() => signOut(auth)}>
+                <button onClick={() => signOut(auth)} className='logout-button'>
                     Cerrar sesión
                     <FiLogOut className="logout-icon" />
                 </button>
