@@ -17,7 +17,7 @@ const Input = () => {
         const userChatsDocRef = doc(db, "userChats", currentUser.uid);
 
         if (!text) {
-            toast.error("Please type something before sending");
+            toast.error("Por favor, escribe algo antes de enviarlo");
             return;
         }
 
@@ -58,7 +58,7 @@ const Input = () => {
                 lastMessageDate: serverTimestamp(),
             });
         } catch (error) {
-            const errorMessage = error.response?.data?.message || "An error occurred";
+            const errorMessage = error.response?.data?.message || "Ocurrió un error";
 
             const errorLog = {
                 id: uuid(),
@@ -79,7 +79,7 @@ const Input = () => {
         <div className="input">
             <input
                 type="text"
-                placeholder="Type something..."
+                placeholder="Escribe algo..."
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 onKeyDown={(e) => {
@@ -89,11 +89,10 @@ const Input = () => {
                 }}
             />
             <div className="send">
-                <button onClick={handleSend}>Send</button>
+                <button onClick={handleSend}>Enviar</button>
             </div>
         </div>
     );
-
 };
 
 export default Input;

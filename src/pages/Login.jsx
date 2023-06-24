@@ -16,27 +16,29 @@ const Login = () => {
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            toast.success("Logged in successfully");
-            navigate("/")
+            toast.success("Inicio de sesión exitoso");
+            navigate("/");
         } catch (err) {
-            toast.error("Something went wrong");
+            toast.error("Algo salió mal");
         }
     };
+    
     return (
         <div className="formContainer">
             <div className="formWrapper">
-                <span className="logo">Psintegra Chat</span>
-                <span className="title">Login</span>
+                <img src="/src/img/logo.png" alt="" className="logo" />
+                <span className="title">Inicio de sesión</span>
                 <form onSubmit={handleSubmit}>
-                    <input type="email" placeholder="email" />
-                    <input type="password" placeholder="password" />
-                    <button>Sign in</button>
+                    <input type="email" placeholder="correo electrónico" />
+                    <input type="password" placeholder="contraseña" />
+                    <button>Iniciar sesión</button>
                 </form>
-                <p>You don't have an account? <Link to="/register">Register</Link></p>
+                <p>¿No tienes una cuenta? <Link to="/register">Registrarse</Link></p>
             </div>
-            <ToastContainer />  
+            <ToastContainer />
         </div>
     );
+
 };
 
 export default Login;

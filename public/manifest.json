@@ -12,7 +12,7 @@
     "id": "com.psintegra.chat",
     "icons": [
         {
-            "src": "psintegra-logo.png",
+            "src": "favicon.png",
             "sizes": "512x512",
             "type": "image/png"
         }

@@ -14,19 +14,19 @@ const Message = ({ message }) => {
         // Calculate the time elapsed since the message was sent
         const messageTime = new Date(message.date).getTime();
         const currentTime = new Date().getTime();
-        const elapsed = Math.floor((currentTime - messageTime) / 1000); // in seconds
+        const elapsed = Math.floor((currentTime - messageTime) / 1000); // en segundos
 
         if (elapsed < 60) {
-            setTimeElapsed(`Just now`);
+            setTimeElapsed(`Justo ahora`);
         } else if (elapsed < 3600) {
             const minutes = Math.floor(elapsed / 60);
-            setTimeElapsed(`${minutes} minutes ago`);
+            setTimeElapsed(`${minutes} minutos atrás`);
         } else if (elapsed < 86400) {
             const hours = Math.floor(elapsed / 3600);
-            setTimeElapsed(`${hours} hours ago`);
+            setTimeElapsed(`${hours} horas atrás`);
         } else {
             const days = Math.floor(elapsed / 86400);
-            setTimeElapsed(`${days} days ago`);
+            setTimeElapsed(`${days} días atrás`);
         }
     }, [message]);
 
@@ -39,7 +39,7 @@ const Message = ({ message }) => {
                 <img
                     src={
                         message.senderId === currentUser.uid
-                            ? currentUser.photoURL
+                            ? "/src/img/empty.webp"
                             : BotInfo.photoURL
                     }
                     alt=""
