@@ -10,16 +10,16 @@ import { ChatContext } from "../context/ChatContext";
 
 const Input = () => {
     const [text, setText] = useState("");
-    const {isLoading, setIsLoading} = useContext(ChatContext);
+    const [isEnterPressed, setIsEnterPressed] = useState(false);
+    const { isLoading, setIsLoading } = useContext(ChatContext);
     const { currentUser } = useContext(AuthContext);
 
     const handleSend = async () => {
-        const userChatsDocRef = doc(db, "userChats", currentUser.uid);
-
-        if (!text) {
-            toast.error("Por favor, escribe algo antes de enviarlo");
+        if (isLoading || !text) {
             return;
         }
+
+        const userChatsDocRef = doc(db, "userChats", currentUser.uid);
 
         const message = {
             id: uuid(),
@@ -78,6 +78,20 @@ const Input = () => {
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter" && !isEnterPressed) {
+            e.preventDefault();
+            setIsEnterPressed(true);
+            handleSend();
+        }
+    };
+
+    const handleKeyUp = (e) => {
+        if (e.key === "Enter") {
+            setIsEnterPressed(false);
+        }
+    };
+
     return (
         <div className="input">
             <input
@@ -85,15 +99,12 @@ const Input = () => {
                 placeholder="Escribe tu mensaje..."
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        handleSend();
-                    }
-                }}
+                onKeyDown={handleKeyDown}
+                onKeyUp={handleKeyUp}
             />
             <div className="send">
                 <button onClick={handleSend} disabled={isLoading}>
-                    {isLoading ? 'Enviando...' : 'Enviar'}
+                    {isLoading ? "Enviando..." : "Enviar"}
                 </button>
             </div>
         </div>
