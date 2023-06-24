@@ -9,6 +9,7 @@ import { BotInfo } from "../data/BotInfo";
 
 const Input = () => {
     const [text, setText] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const { currentUser } = useContext(AuthContext);
 
     const handleSend = async () => {
@@ -27,6 +28,7 @@ const Input = () => {
         };
 
         setText("");
+        setIsLoading(true);
 
         try {
             await Promise.all([
@@ -70,6 +72,8 @@ const Input = () => {
                 lastMessage: errorLog,
                 lastMessageDate: serverTimestamp(),
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -87,7 +91,9 @@ const Input = () => {
                 }}
             />
             <div className="send">
-                <button onClick={handleSend}>Enviar</button>
+                <button onClick={handleSend} disabled={isLoading}>
+                    {isLoading ? 'Enviando...' : 'Enviar'}
+                </button>
             </div>
         </div>
     );
