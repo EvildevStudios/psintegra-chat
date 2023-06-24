@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import { ChatContext } from "../context/ChatContext";
+import { BotInfo } from "../data/BotInfo";
 
 const Chat = () => {
     const { data } = useContext(ChatContext);
@@ -9,7 +10,7 @@ const Chat = () => {
     return (
         <div className="chat">
             <div className="chatInfo">
-                <span>Psintegra Assistant</span>
+                <span>{BotInfo.username}</span>
             </div>
             <Messages />
             <Input />

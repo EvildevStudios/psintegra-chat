@@ -1,6 +1,5 @@
 export const BotInfo = {
-    uid: "Psintegra-Assistant",
-    username: "Asistente de Psintegra",
+    uid: "BOT-AI",
+    username: "Consejero LC",
     photoURL: "/src/img/profile.png",
-    lastMessage: "Hola, soy el asistente de Psintegra, ¿en qué puedo ayudarte?"
 }

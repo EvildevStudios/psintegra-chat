@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Add from "../img/addAvatar.png";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -30,23 +29,17 @@ const Register = () => {
             // Crear usuario
             const res = await createUserWithEmailAndPassword(auth, email, password);
 
-            // URL de foto por defecto
-            const downloadURL =
-                "https://firebasestorage.googleapis.com/v0/b/psintegra-db.appspot.com/o/empty.webp?alt=media&token=c23cd900-365b-4d49-a3ea-7e5b131e62b4";
-
             try {
                 // Actualizar perfil
                 await updateProfile(res.user, {
-                    displayName: username,
-                    photoURL: downloadURL,
+                    displayName: username
                 });
 
                 // Crear usuario en Firestore
                 await setDoc(doc(db, "users", res.user.uid), {
                     uid: res.user.uid,
                     username,
-                    email,
-                    photoURL: downloadURL,
+                    email
                 });
 
                 // Crear chats vacíos para el usuario en Firestore

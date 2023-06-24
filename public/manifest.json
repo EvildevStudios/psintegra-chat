@@ -1,15 +1,15 @@
 {
-    "name": "Psintegra Chat",
-    "short_name": "Psintegra Chat",
-    "description": "Psintegra Web Assistant",
-    "lang": "en-US",
+    "name": "Libre Consejo",
+    "short_name": "Libre Consejo",
+    "description": "Asistente virtual de Libre Consejo",
+    "lang": "es-ES",
     "start_url": "/",
     "display": "standalone",
     "orientation": "portrait",
     "theme_color": "#ffffff",
     "background_color": "#a7bcff",
     "scope": "/",
-    "id": "com.psintegra.chat",
+    "id": "/",
     "icons": [
         {
             "src": "favicon.png",
