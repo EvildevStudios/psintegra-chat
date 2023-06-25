@@ -58,7 +58,7 @@ const Register = () => {
     return (
         <div className="formContainer">
             <div className="formWrapper">
-                <img src="/src/img/logo.png" alt="" className="logo" />
+                <img src="https://firebasestorage.googleapis.com/v0/b/psintegra-firebase.appspot.com/o/logo_site.png?alt=media&token=2bae1764-6ec0-4e29-a0de-dc5fe812259f" alt="" className="logo" />
                 <span className="title">Registro</span>
                 <form onSubmit={handleSubmit}>
                     <input required type="text" placeholder="nombre de usuario" />
