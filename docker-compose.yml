@@ -1,11 +1,23 @@
 version: '3'
 services:
   backend:
-    image: cabreraevil/psintegra-chat
+    image: libreconsejo-chat
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    restart: on-failure
     ports:
-      - 80:80
-    container_name: psintegra-chat
+      - 8080:80
+    container_name: libreconsejo-chat
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 256M
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
