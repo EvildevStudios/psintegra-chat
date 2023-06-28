@@ -5,7 +5,7 @@
 }
 
 @mixin tablet {
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 810px) {
     @content;
   }
 }
@@ -107,13 +107,23 @@
     overflow: hidden;
 
     @include tablet {
-      width: 90%;
+      width: 100%;
+      height: 100%;
+    }
+
+    @include mobile {
+      width: 100%;
+      height: 100%;
     }
 
     .sidebar {
       flex: 1;
       background-color: #3e3c61;
       position: relative;
+
+      @include mobile {
+        display: none;
+      }
 
       .navbar {
         display: flex;
