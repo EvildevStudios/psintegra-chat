@@ -1,6 +1,6 @@
-# Psintegra Chat - React Client
+# Libre Consejo Chat - React Client
 
-This git repository contains the code for the React-based client-side application developed for Psintegra Psychological Clinic. The application has three main routes:
+This git repository contains the code for the React-based client-side application developed for Libre Consejo Psychological Clinic. The application has three main routes:
 
 - `/home`: The home page of the application.
 - `/login`: The login page of the application.
@@ -82,4 +82,4 @@ If you would like to contribute to this project, please follow these steps:
 
 ## License
 
-Psintegra API is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+Libre Consejo API is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
